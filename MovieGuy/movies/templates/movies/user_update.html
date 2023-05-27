@@ -1,0 +1,28 @@
+{% extends 'movies/layout.html' %}
+{% block content %}
+  <h1>Update Profile</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" name="username" value="{{ user.username }}">
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" name="email" value="{{ user.email }}">
+    </div>
+    <div>
+      <label for="city">City:</label>
+      <input type="text" name="city" value="{{ user.profile.city }}">
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" name="password">
+    </div>
+    <div>
+      <label for="confirmation">Confirm Password:</label>
+      <input type="password" name="confirmation">
+    </div>
+    <button type="submit">Update Profile</button>
+  </form>
+{% endblock %}

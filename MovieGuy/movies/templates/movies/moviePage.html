@@ -1,0 +1,46 @@
+{% extends 'movies/layout.html' %}
+
+{% block body %}
+    <div id="posterBox">
+        <div id="posterInnerBox">
+            <div class="topInfoLeft">
+                <div class="movieBanner"></div>
+            </div>
+
+            <div class="topInfoRight">
+                <h1>{{ movie.name }}</h1>
+            </div>
+        </div>
+    </div>
+
+    <div id="movieContainer">
+        <div class="movieInfoLeft">
+            <div class="movieBanner">
+                <a id="trailerLink" href="{{ movie.trailer }}" target="_blank">
+                    <img src="{{ movie.image.url }}" alt="Movie Poster" style="max-width: 300px; max-height: 400px;">
+                </a>
+            </div>
+        </div>
+
+        <div class="movieInfoRight">
+            <h2>Synopsis</h2>
+            <p>{{ movie.about }}</p>
+
+            <form id="bookTicketPage" action="{% url 'book_seat' movieName=movie %}" method="GET">
+                <button type="submit" form="bookTicketPage" id="selectHall">Book Seats</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#trailerLink').click(function (e) {
+                e.preventDefault();
+                var trailerURL = $(this).attr('href');
+                // Open the trailer URL in a new tab/window
+                window.open(trailerURL, '_blank');
+            });
+        });
+    </script>
+{% endblock %}

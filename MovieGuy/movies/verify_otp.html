@@ -1,0 +1,32 @@
+{% extends 'movies/layout.html' %}
+
+{% block body %}
+    <br><br><br><br>
+
+    <div class="padding">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Credit Card</strong>
+                        <small>enter your card details</small>
+                    </div>
+                    <div class="card-body">
+                        <h1>OTP Verification</h1>
+
+                        {% if error_message %}
+                            <p>{{ error_message }}</p>
+                        {% endif %}
+
+                        <form method="POST" action="{% url 'verify_otp' %}">
+                            {% csrf_token %}
+                            <label for="otp_code">Enter OTP code:</label>
+                            <input type="text" id="otp_code" name="otp_code">
+                            <input type="submit" value="Verify OTP">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
