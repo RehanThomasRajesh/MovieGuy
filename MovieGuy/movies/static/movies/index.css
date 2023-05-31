@@ -96,17 +96,17 @@ body {
     top: 50px;
 }
 
-.searchBox:hover > .searchText {
-    width: 60vw;
+.searchB:hover > .searchT {
+    width: 20vw;
     padding: 0 6px;
 }
 
-.searchBox:hover > .searchButton {
-    background: white;
-    color: black;
+.searchB:hover > .searchBu {
+    background: none;
+    color: rgb(221, 22, 22);
 }
 
-.searchButton {
+.searchBu {
     color: #7c0800;
     float: right;
     width: 30px;
@@ -121,18 +121,18 @@ body {
     cursor: pointer;
 }
 
-.searchButton > i {
+.searchBu > i {
     font-size: 20px;
     color: #c50d00;
 }
 
-.searchText {
-    border: none;
-    background: none;
-    outline: none;
+.searchT {
+    border: red;
+    background:none;
+    outline: red;
     float: left;
     padding: 0;
-    color: white;
+    color: rgb(18, 6, 6);
     font-size: 16px;
     transition: 0.4s;
     line-height: 30px;
@@ -996,12 +996,10 @@ src: url(Helvetica.ttf);
     }
 }
 
-.ticketMovieDetails{
-    flex: 80%;
-    display: flex;
+.ticketMovieDetails {
+    flex: 100%;
     flex-direction: column;
 }
-
 .ticketMovieName {
     flex: 15%;
     background-color: black;

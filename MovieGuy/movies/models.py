@@ -47,10 +47,13 @@ class Movie(models.Model):
     name = models.CharField(max_length=30)
     image = models.ImageField(upload_to='media/')
     about = models.CharField(max_length=500)
-    trailer=models.CharField(max_length=100, default=name)
+    trailer = models.CharField(max_length=100, default=name)
+    director = models.CharField(max_length=100,default=0)
+    movie_stars = models.CharField(max_length=200,default=0)
 
     def __str__(self):
         return self.name
+
 
 
 def emptyAllSeats():
@@ -119,11 +122,6 @@ def createTheater(sender, instance, **kwargs):
 post_save.connect(createTheater, sender=Theatre)
 
 class Ticket(models.Model):
-    STATUS_CHOICES = (
-        ('Pending', 'Pending'),
-        ('Paid', 'Paid'),
-        ('Cancelled', 'Cancelled'),
-    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     seat = models.JSONField()
     show = models.ForeignKey(Show, on_delete=models.CASCADE)
@@ -138,3 +136,4 @@ def deleteTicket(sender, instance, **kwargs):
     currentShow.save()
 
 post_delete.connect(deleteTicket, sender=Ticket)
+

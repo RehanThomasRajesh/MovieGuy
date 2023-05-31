@@ -7,7 +7,7 @@
                 <div class="movieBanner"></div>
             </div>
 
-            <div class="topInfoRight">
+            <div class="topInfoRight" style="margin-left: 100px;">
                 <h1>{{ movie.name }}</h1>
             </div>
         </div>
@@ -17,7 +17,7 @@
         <div class="movieInfoLeft">
             <div class="movieBanner">
                 <a id="trailerLink" href="{{ movie.trailer }}" target="_blank">
-                    <img src="{{ movie.image.url }}" alt="Movie Poster" style="max-width: 300px; max-height: 400px;">
+                    <img src="{{ movie.image.url }}" alt="Movie Poster" class="moviePoster">
                 </a>
             </div>
         </div>
@@ -25,7 +25,8 @@
         <div class="movieInfoRight">
             <h2>Synopsis</h2>
             <p>{{ movie.about }}</p>
-
+            <p>Director: {{ movie.director }}</p>
+            <p>Stars: {{ movie.movie_stars }}</p>
             <form id="bookTicketPage" action="{% url 'book_seat' movieName=movie %}" method="GET">
                 <button type="submit" form="bookTicketPage" id="selectHall">Book Seats</button>
             </form>
@@ -43,4 +44,34 @@
             });
         });
     </script>
+
+    <style>
+        #movieContainer {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between; /* Add space between left and right sections */
+        }
+
+        .movieInfoLeft {
+            flex: 0 0 auto;
+        }
+
+        .movieInfoRight {
+            flex: 1;
+            padding-left: 100px;
+        }
+
+        .movieInfoRight h2 {
+            margin-bottom: 10px;
+        }
+
+        .movieInfoRight p {
+            margin-top: 0; /* Reset default margin */
+        }
+
+        .moviePoster {
+            max-width: 300px;
+            max-height: 400px;
+        }
+    </style>
 {% endblock %}

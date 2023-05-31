@@ -91,7 +91,6 @@ DATABASES = {
 
 
 
-
 AUTH_USER_MODEL = 'movies.User'
 
 # Password validation

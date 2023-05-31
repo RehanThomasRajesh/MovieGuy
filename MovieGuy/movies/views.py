@@ -25,16 +25,14 @@ from django.http import JsonResponse
 def login_view(request):
     if request.method == "POST":
 
-        
+        # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
-    
-        
+
+        # Check if authentication successful
         if user is not None:
             login(request, user)
-            #otp_code = generate_otp_code()
-            #send_otp_sms(user.phn_no, otp_code)
             return HttpResponseRedirect(reverse("index"))
         else:
             messages.error(request, "Invalid username and/or password.")
@@ -56,27 +54,24 @@ def register(request):
         username = request.POST["username"]
         email = request.POST["email"]
         city = request.POST["city"]
-        phn_no = request.POST["phn_no"]
         city_obj = City.objects.get(name=city)
 
-        
+        # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             messages.error(request, "Passwords must match.")
             return redirect(reverse(register))
 
-        
+        # Attempt to create new user
         try:
-            user = User.objects.create_user(username, email, password, city=city_obj,phn_no=phn_no)
+            user = User.objects.create_user(username, email, password, city=city_obj)
             user.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {
                 "message": "Username already taken."
             })
         login(request, user)
-        #otp_code = generate_otp_code()
-        #send_otp_sms(user.phn_no, otp_code)
         return HttpResponseRedirect(reverse("index"))
 
     else:
@@ -86,7 +81,6 @@ def register(request):
 def index(request):
     allMovies = list(Movie.objects.all())
     random_movies = random.sample(allMovies, 3)
-
     return render(request, "movies/index.html", {"random_movies": random_movies})
 
 
@@ -163,7 +157,7 @@ def bookTicket(request, movieName):
 
         return render(request, "movies/book_seat.html", context)
     else:
-        
+        # Handle the case where request.user.city is None
         return HttpResponse("No city found for the user")
 
 def error(request):
@@ -237,28 +231,6 @@ def allTickets(request):
 
     return render(request, "movies/tickets.html", context)
 
-def updateTicketStatus(request):
-    if request.method == 'POST':
-        ticket_id = request.POST.get('ticket_id')
-        ticket = get_object_or_404(Ticket, id=ticket_id, user=request.user)
-        ticket.status = 'Paid'
-        ticket.save()
-    
-    return redirect('all-tickets')
-
-def cancelTicket(request, ticket_id):
-    ticket = get_object_or_404(Ticket, id=ticket_id, user=request.user)
-
-    if request.method == 'POST':
-        if not ticket.payment:
-            # Cancellation logic
-            ticket.delete()
-            return redirect('allTickets')
-        else:
-            # Ticket cannot be canceled if payment has been made
-            return redirect('allTickets')
-
-    return redirect('allTickets')  # Redirect to ticket listing page
 def allMovies(request):
     return render(request, "movies/allMovies.html")
 
